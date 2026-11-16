@@ -3,339 +3,147 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#a78343">
 <title>黃金計算機</title>
-
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    padding: 20px;
-    font-family: Arial, "Noto Sans TC", sans-serif;
-    background: linear-gradient(135deg, #f8f1e3, #fffdf8);
-    color: #4b3b20;
-}
-
-.container {
-    max-width: 480px;
-    margin: auto;
-    background: white;
-    padding: 25px;
-    border-radius: 22px;
-    box-shadow: 0 5px 25px #c6a96b30;
-}
-
-h1 {
-    text-align: center;
-    color: #a27c35;
-    margin-bottom: 25px;
-}
-
-h3 {
-    color: #98732f;
-    border-bottom: 1px solid #eadbbd;
-    padding-bottom: 10px;
-}
-
-label {
-    display: block;
-    margin-top: 15px;
-    margin-bottom: 7px;
-    font-size: 14px;
-}
-
-input {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #dfd0b1;
-    border-radius: 10px;
-    font-size: 17px;
-    outline: none;
-}
-
-input:focus {
-    border-color: #b18b45;
-}
-
-.weight-row {
-    display: flex;
-    gap: 8px;
-}
-
-.weight-row input {
-    flex: 1;
-    min-width: 0;
-}
-
-button {
-    border: none;
-    border-radius: 10px;
-    background: #a78343;
-    color: white;
-    padding: 12px 15px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-button:active {
-    opacity: 0.8;
-}
-
-.result {
-    background: #faf6ed;
-    padding: 17px;
-    border-radius: 13px;
-    margin-top: 15px;
-}
-
-.result div {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 9px 0;
-    font-size: 15px;
-}
-
-.result strong {
-    color: #8c682c;
-}
-
-.total {
-    border-top: 1px solid #e4d5b7;
-    margin-top: 10px;
-    padding-top: 15px !important;
-    font-size: 18px !important;
-    font-weight: bold;
-}
-
-.labor {
-    color: #a17a32 !important;
-    font-size: 22px;
-}
-
-.clear {
-    width: 100%;
-    margin-top: 20px;
-    background: #e8ddc8;
-    color: #634d29;
-}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:linear-gradient(135deg,#f8f1e3,#fffdf8);font-family:Arial,"Noto Sans TC",sans-serif;color:#4b3b20}
+.container{max-width:480px;margin:auto;background:white;padding:24px;border-radius:22px;box-shadow:0 5px 25px #c6a96b30}
+h1{text-align:center;color:#a27c35;margin-bottom:25px}
+h3{color:#98732f;border-bottom:1px solid #eadbbd;padding-bottom:10px}
+label{display:block;margin-top:15px;margin-bottom:7px;font-size:14px}
+input{width:100%;padding:13px;border:1px solid #dfd0b1;border-radius:10px;font-size:17px;outline:none}
+input:focus{border-color:#b18b45}
+.row{display:flex;gap:8px}
+.row input{flex:1;min-width:0}
+button{border:0;border-radius:10px;background:#a78343;color:white;padding:12px 15px;font-size:14px;cursor:pointer}
+.result{background:#faf6ed;padding:16px;border-radius:13px;margin-top:15px}
+.result div{display:flex;justify-content:space-between;gap:10px;padding:9px 0;font-size:15px}
+.result strong{color:#8c682c;text-align:right}
+.total{border-top:1px solid #e4d5b7;margin-top:10px;padding-top:15px!important;font-size:18px!important;font-weight:bold}
+.labor{color:#a17a32!important;font-size:23px}
+.clear{width:100%;margin-top:20px;background:#e8ddc8;color:#634d29}
+.note{text-align:center;color:#95866e;font-size:12px;line-height:1.6}
+.unit{font-size:13px;color:#95866e}
 </style>
 </head>
-
 <body>
-
 <div class="container">
 
 <h1>✦ 黃金計算機 ✦</h1>
 
 <h3>今日金價</h3>
-
 <label>今日金價（元／錢）</label>
-<input type="number" id="goldPrice"
-placeholder="請輸入今日金價" oninput="calculate()">
-
+<input type="number" id="price" placeholder="輸入今日金價" oninput="calculate()">
 
 <h3>黃金重量換算</h3>
-
-<label>輸入黃金重量</label>
-
-<div class="weight-row">
-<input type="number" id="weight"
-placeholder="輸入重量" oninput="calculate()">
-
-<button onclick="switchUnit()" id="switchBtn">
-切換為錢
-</button>
+<label>店家提供的黃金重量（克）</label>
+<div class="row">
+<input type="number" id="gramsInput" placeholder="輸入克數" step="any" oninput="calculate()">
+<button onclick="switchInputUnit()" id="switchBtn">切換為錢</button>
 </div>
 
 <div class="result">
-<div>
-<span>換算克數</span>
-<strong id="grams">0 克</strong>
+<div><span>黃金重量（克）</span><strong id="grams">— 克</strong></div>
+<div><span>換算重量（錢）</span><strong id="qian">— 錢</strong></div>
 </div>
-
-<div>
-<span>換算錢數</span>
-<strong id="qian">0 錢</strong>
-</div>
-</div>
+<p class="note">換算公式：1 錢 = 3.75 克<br>可直接輸入克數，也可切換成錢輸入</p>
 
 <h3>總價與工錢</h3>
-
 <label>總價（元）</label>
-<input type="number" id="total"
-placeholder="請輸入總價" oninput="calculate()">
-
-<label>計算工錢的黃金重量（錢）</label>
-<input type="number" id="laborWeight"
-placeholder="請輸入錢數" oninput="calculate()">
-
+<input type="number" id="total" placeholder="輸入總價" oninput="calculate()">
 
 <h3>計算明細</h3>
-
 <div class="result">
-
-<div>
-<span>今日金價</span>
-<strong id="detailPrice">0 元／錢</strong>
+<div><span>今日金價</span><strong id="dPrice">—</strong></div>
+<div><span>計算金重</span><strong id="dWeight">—</strong></div>
+<div><span>黃金本金</span><strong id="principal">—</strong></div>
+<div><span>黃金工錢</span><strong id="labor" class="labor">—</strong></div>
+<div class="total"><span>總價</span><strong id="dTotal">—</strong></div>
 </div>
 
-<div>
-<span>計算金重</span>
-<strong id="detailWeight">0 錢</strong>
+<button class="clear" onclick="clearAll()">清空重新計算</button>
+<p class="note">黃金計算機｜重量換算與工錢試算</p>
 </div>
-
-<div>
-<span>黃金本金</span>
-<strong id="principal">0 元</strong>
-</div>
-
-<div>
-<span>黃金工錢</span>
-<strong id="labor" class="labor">0 元</strong>
-</div>
-
-<div class="total">
-<span>總價</span>
-<strong id="detailTotal">0 元</strong>
-</div>
-
-</div>
-
-<button class="clear" onclick="clearAll()">
-清空重新計算
-</button>
-
-</div>
-
 
 <script>
-
 let unit = "克";
 
-// 數字格式
-function format(num) {
-    return Number.isFinite(num)
-        ? num.toLocaleString("zh-TW", {
-            maximumFractionDigits: 4
-          })
-        : "0";
+function fmt(n){
+ return Number.isFinite(n)
+ ? n.toLocaleString("zh-TW",{maximumFractionDigits:4})
+ : "—";
 }
 
-// 克與錢換算
-function calculate() {
-
-    const price = Number(
-        document.getElementById("goldPrice").value
-    );
-
-    const weightInput = document.getElementById("weight").value;
-
-    const weight = Number(weightInput);
-
-    const grams = unit === "克"
-        ? weight
-        : weight * 3.75;
-
-    const qian = grams / 3.75;
-
-    document.getElementById("grams").innerText =
-        format(grams) + " 克";
-
-    document.getElementById("qian").innerText =
-        format(qian) + " 錢";
-
-
-    // 工錢計算
-    const totalInput = document.getElementById("total").value;
-
-    const laborWeightInput =
-        document.getElementById("laborWeight").value;
-
-    const total = Number(totalInput);
-    const laborWeight = Number(laborWeightInput);
-
-    const principal = price * laborWeight;
-
-    const labor = total - principal;
-
-
-    // 計算明細
-    document.getElementById("detailPrice").innerText =
-        format(price) + " 元／錢";
-
-    document.getElementById("detailWeight").innerText =
-        format(laborWeight) + " 錢";
-
-    document.getElementById("principal").innerText =
-        format(principal) + " 元";
-
-    document.getElementById("labor").innerText =
-        totalInput === "" || laborWeightInput === "" ||
-        document.getElementById("goldPrice").value === ""
-        ? "待輸入"
-        : format(labor) + " 元";
-
-    document.getElementById("detailTotal").innerText =
-        totalInput === "" ? "待輸入" : format(total) + " 元";
+function getGrams(){
+ const v=document.getElementById("gramsInput").value;
+ if(v==="") return NaN;
+ const n=Number(v);
+ return unit==="克"?n:n*3.75;
 }
 
+function calculate(){
+ const grams=getGrams();
+ const qian=grams/3.75;
 
-// 切換克與錢
-function switchUnit() {
+ document.getElementById("grams").textContent=
+ Number.isFinite(grams)?fmt(grams)+" 克":"— 克";
 
-    const input = document.getElementById("weight");
+ document.getElementById("qian").textContent=
+ Number.isFinite(qian)?fmt(qian)+" 錢":"— 錢";
 
-    if (input.value !== "") {
+ const pText=document.getElementById("price").value;
+ const tText=document.getElementById("total").value;
+ const p=Number(pText);
+ const total=Number(tText);
 
-        const value = Number(input.value);
+ // 工錢一律使用換算後的「錢」
+ const principal=p*qian;
+ const labor=total-principal;
 
-        if (unit === "克") {
-            input.value = value / 3.75;
-            unit = "錢";
-            document.getElementById("switchBtn").innerText =
-                "切換為克";
-        } else {
-            input.value = value * 3.75;
-            unit = "克";
-            document.getElementById("switchBtn").innerText =
-                "切換為錢";
-        }
+ document.getElementById("dPrice").textContent=
+ pText===""?"—":fmt(p)+" 元／錢";
 
-    } else {
+ document.getElementById("dWeight").textContent=
+ Number.isFinite(qian)?fmt(qian)+" 錢":"—";
 
-        unit = unit === "克" ? "錢" : "克";
+ document.getElementById("principal").textContent=
+ pText===""||!Number.isFinite(qian)?"—":fmt(principal)+" 元";
 
-        document.getElementById("switchBtn").innerText =
-            unit === "克" ? "切換為錢" : "切換為克";
-    }
+ document.getElementById("labor").textContent=
+ pText===""||tText===""||!Number.isFinite(qian)?"—":fmt(labor)+" 元";
 
-    calculate();
+ document.getElementById("dTotal").textContent=
+ tText===""?"—":fmt(total)+" 元";
 }
 
+function switchInputUnit(){
+ const input=document.getElementById("gramsInput");
+ if(input.value!==""){
+  const n=Number(input.value);
+  input.value=unit==="克"?n/3.75:n*3.75;
+ }
+ unit=unit==="克"?"錢":"克";
+ document.getElementById("switchBtn").textContent=
+ unit==="克"?"切換為錢":"切換為克";
+ document.querySelector("label[for='gramsInput']");
+ document.getElementById("gramsInput").placeholder=
+ unit==="克"?"輸入克數":"輸入錢數";
+ calculate();
+}
 
-// 清空
-function clearAll() {
-
-    document.getElementById("goldPrice").value = "";
-    document.getElementById("weight").value = "";
-    document.getElementById("total").value = "";
-    document.getElementById("laborWeight").value = "";
-
-    unit = "克";
-
-    document.getElementById("switchBtn").innerText =
-        "切換為錢";
-
-    calculate();
+function clearAll(){
+ ["price","gramsInput","total"].forEach(id=>{
+  document.getElementById(id).value="";
+ });
+ unit="克";
+ document.getElementById("switchBtn").textContent="切換為錢";
+ document.getElementById("gramsInput").placeholder="輸入克數";
+ calculate();
 }
 
 calculate();
-
 </script>
-
 </body>
 </html>
