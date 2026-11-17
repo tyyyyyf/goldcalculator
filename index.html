@@ -12,17 +12,22 @@
 
 body{
   margin:0;
-  padding:24px 15px;
+  padding:10px 15px;
   font-family:-apple-system,BlinkMacSystemFont,"Noto Sans TC",sans-serif;
   background:linear-gradient(145deg,#21190c,#5a421d,#21190c);
   color:#fff8e8;
   min-height:100vh;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 .container{
+  width:100%;
   max-width:480px;
-  margin:20px auto;
-  padding:25px 20px;
+  margin:0 auto;
+  padding:18px 20px;
   border-radius:22px;
   background:linear-gradient(145deg,#3b2b16,#21190e);
   border:1px solid #b9954b;
@@ -39,19 +44,19 @@ h1{
   text-align:center;
   color:#cbb98e;
   font-size:13px;
-  margin-bottom:25px;
+  margin-bottom:14px;
 }
 
 label{
   display:block;
-  margin:17px 0 8px;
+  margin:11px 0 6px;
   color:#e8d5a6;
   font-size:14px;
 }
 
 input{
   width:100%;
-  padding:14px;
+  padding:11px 14px;
   border-radius:10px;
   border:1px solid #9b7940;
   background:#fffaf0;
@@ -79,7 +84,7 @@ input:focus{
 button{
   border:0;
   border-radius:10px;
-  padding:13px 15px;
+  padding:11px 15px;
   background:linear-gradient(135deg,#f0d58e,#bd8b35);
   color:#38250b;
   font-weight:bold;
@@ -89,27 +94,27 @@ button{
 }
 
 .convert{
-  margin-top:10px;
-  padding:12px;
+  margin-top:8px;
+  padding:9px 12px;
   border-radius:10px;
   background:#ffffff0d;
   color:#e9d5a5;
   font-size:14px;
-  line-height:1.8;
+  line-height:1.6;
 }
 
 .calculate{
   width:100%;
-  margin-top:24px;
-  padding:16px;
+  margin-top:15px;
+  padding:13px;
   font-size:17px;
   border-radius:12px;
 }
 
 .result{
   display:none;
-  margin-top:22px;
-  padding:18px;
+  margin-top:13px;
+  padding:12px 18px;
   border-radius:14px;
   background:#fff9e9;
   color:#3c2a10;
@@ -118,14 +123,14 @@ button{
 .result h2{
   text-align:center;
   color:#94691f;
-  margin:0 0 15px;
+  margin:0 0 8px;
 }
 
 .result-row{
   display:flex;
   justify-content:space-between;
   gap:12px;
-  padding:11px 0;
+  padding:7px 0;
   border-bottom:1px solid #e7d9b8;
   font-size:14px;
 }
@@ -145,7 +150,112 @@ button{
   text-align:center;
   font-size:12px;
   color:#c9b88e;
-  margin-top:18px;
+  margin-top:11px;
+}
+
+/* 手機高度調整：維持原本風格，避免上下滑動 */
+@media screen and (max-height:750px){
+  body{
+    padding:6px 12px;
+  }
+
+  .container{
+    padding:12px 18px;
+  }
+
+  .subtitle{
+    margin-bottom:9px;
+  }
+
+  label{
+    margin:8px 0 5px;
+  }
+
+  input{
+    padding:9px 12px;
+  }
+
+  button{
+    padding:10px 13px;
+  }
+
+  .convert{
+    margin-top:6px;
+    padding:7px 10px;
+    line-height:1.5;
+  }
+
+  .calculate{
+    margin-top:11px;
+    padding:11px;
+  }
+
+  .result{
+    margin-top:9px;
+    padding:9px 14px;
+  }
+
+  .result h2{
+    margin-bottom:5px;
+  }
+
+  .result-row{
+    padding:5px 0;
+  }
+
+  .note{
+    margin-top:7px;
+  }
+}
+
+/* 螢幕較矮時進一步壓縮間距 */
+@media screen and (max-height:650px){
+  body{
+    padding:4px 10px;
+  }
+
+  .container{
+    padding:9px 16px;
+  }
+
+  h1{
+    margin:2px 0 5px;
+  }
+
+  .subtitle{
+    margin-bottom:6px;
+  }
+
+  label{
+    margin:6px 0 4px;
+  }
+
+  input{
+    padding:7px 12px;
+  }
+
+  .convert{
+    padding:5px 10px;
+    line-height:1.4;
+  }
+
+  .calculate{
+    margin-top:8px;
+    padding:9px;
+  }
+
+  .result{
+    margin-top:7px;
+    padding:7px 12px;
+  }
+
+  .result-row{
+    padding:4px 0;
+  }
+
+  .note{
+    margin-top:5px;
+  }
 }
 </style>
 </head>
@@ -235,7 +345,7 @@ button{
   </div>
 
   <div class="note">
-    換算基準：1 錢 = 3.75 克
+  換算基準：1 錢 = 3.75 克｜1 克 = 0.2667 錢
   </div>
 
 </div>
