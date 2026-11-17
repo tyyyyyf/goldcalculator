@@ -193,7 +193,7 @@ button{
     id="totalPrice"
     type="number"
     inputmode="decimal"
-    placeholder="請輸入商品總價"
+    placeholder="可留空，留空則工錢為 0"
     step="any"
   >
 
@@ -342,27 +342,29 @@ function calculate(){
   const totalInput = document.getElementById("totalPrice").value;
 
   const goldPrice = Number(priceInput);
-  const totalPrice = Number(totalInput);
 
-  if(
-    priceInput === "" ||
-    weightInput.value === "" ||
-    totalInput === ""
-  ){
+  // 總價可以留空
+  if(priceInput === "" || weightInput.value === ""){
 
-    alert("請完整輸入今日金價、黃金重量及商品總價！");
+    alert("請輸入今日金價及黃金重量！");
     return;
   }
 
   if(
     !Number.isFinite(goldPrice) ||
-    !Number.isFinite(totalPrice) ||
     goldPrice < 0 ||
-    totalPrice < 0 ||
     getGrams() <= 0
   ){
 
-    alert("請輸入有效的數字！");
+    alert("請輸入有效的金價及重量！");
+    return;
+  }
+
+  // 總價有填才檢查是否為有效數字
+  if(totalInput !== "" &&
+     (!Number.isFinite(Number(totalInput)) || Number(totalInput) < 0)){
+
+    alert("請輸入有效的商品總價！");
     return;
   }
 
@@ -372,8 +374,24 @@ function calculate(){
   // 黃金本金 = 今日金價 × 重量（錢）
   const goldAmount = goldPrice * qian;
 
-  // 工錢 = 商品總價 - 黃金本金
-  const labor = totalPrice - goldAmount;
+  let labor;
+  let finalTotal;
+
+  if(totalInput === ""){
+
+    // 沒有輸入總價：工錢為 0
+    labor = 0;
+
+    // 商品總價自動等於黃金本金
+    finalTotal = goldAmount;
+
+  }else{
+
+    // 有輸入總價：工錢 = 總價 - 黃金本金
+    finalTotal = Number(totalInput);
+    labor = finalTotal - goldAmount;
+
+  }
 
   // 顯示今日金價
   document.getElementById("rPrice").textContent =
@@ -398,7 +416,7 @@ function calculate(){
 
   // 顯示商品總價
   document.getElementById("rTotal").textContent =
-    "$" + totalPrice.toLocaleString("zh-TW",{
+    "$" + finalTotal.toLocaleString("zh-TW",{
       maximumFractionDigits:2
     });
 
