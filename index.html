@@ -345,7 +345,7 @@ button{
   </div>
 
   <div class="note">
-  換算基準：1 錢 = 3.75 克｜1 克 = 0.2667 錢
+    換算基準：1 錢 = 3.75 克
   </div>
 
 </div>
@@ -416,13 +416,22 @@ function updateConversion(){
 
 function switchUnit(){
 
+  // 記錄是否有輸入數字
+  const hasValue = weightInput.value.trim() !== "";
+
+  // 先取得目前重量
   const grams = getGrams();
+  const qian = getQian();
 
   if(unit === "克"){
 
     unit = "錢";
 
-    weightInput.value = getQian().toFixed(3);
+    // 原本空白就保持空白
+    weightInput.value = hasValue
+      ? qian.toFixed(3)
+      : "";
+
     weightInput.placeholder = "請輸入錢數";
 
     switchButton.textContent = "切換為克";
@@ -431,7 +440,11 @@ function switchUnit(){
 
     unit = "克";
 
-    weightInput.value = grams.toFixed(3);
+    // 原本空白就保持空白
+    weightInput.value = hasValue
+      ? grams.toFixed(3)
+      : "";
+
     weightInput.placeholder = "請輸入克數";
 
     switchButton.textContent = "切換為錢";
